@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 
 
-public class passwordGenerator extends layout
+public class passwordGenerator extends javax.swing.JFrame
 {
     /* ---- Define Varibles ---- */
     // all of the different characters which the user can choose
@@ -15,12 +15,12 @@ public class passwordGenerator extends layout
     private static String[]            pwUpperLetter    =   {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
     private static String[]            pwNumbers        =   {"1","2","3","4","5","6","7","8","9","0"};
     private static String[]            pwSymbols        =   {"!","@","#","$","%","^","&","*","_","-","+","="};
-    private static String[]            pwCharacters     =   {"~","(",")","{","}","[","]","/","\\","\"","`",",",";",":",".","<",">"};
+    private static String[]            pwCharacters     =   {"~","(",")","{","}","[","]","/","\\","\"","`",",",";",":",".","<",">"," "};
 
 
     //the length of the password.
     // The user can choose the lenth
-    public static int                  pwLength = 10;
+    public static int                  pwLength;
     //this is the string where the password that will be generated in
     public static String               pwOutput = "";
 
@@ -28,51 +28,23 @@ public class passwordGenerator extends layout
     private static String[]            pwGetChar = {};
 
     // all the variables which indicates which kind of characters the user wants to use for his password
-    private static boolean             useLower         = false;
-    private static boolean             useUpper         = false;
-    private static boolean             useNumbers       = false;
-    private static boolean             useCharacters    = false;
-    private static boolean             useSymbols       = false;
-
-    layout screen = (layout);
-
+    protected static boolean           useLower         = false;
+    protected static boolean           useUpper         = false;
+    protected static boolean           useNumbers       = false;
+    protected static boolean           useCharacters    = false;
+    protected static boolean           useSymbols       = false;
 
 
     /* ------------------------- */
     public static void main(String[]args){
-        screen();
-        Input();
         //Execute();
         //generate_password();
     }
 
-    public static void Execute(){
-
-
-    }
-
-    public static void set_Characters(){
-        if(useLower) {   useLower = true;       }
-        if(useUpper) {   useUpper = true;       }
-        if(useNumbers) {   useNumbers = true;     }
-        if(useCharacters) {   useCharacters = true;  }
-        if(useSymbols) {   useSymbols = true;     }
-    }
-
-    public static void Input(){
-        Scanner scanner = new Scanner (System.in);
-        System.out.print("Enter how long your password will be: ");
-        pwLength = scanner.nextInt();
-        if (pwLength < 6){
-            System.out.print("Your password has to be 6 or more characters");
-        }
-        generate_password();
-
-        scanner.close();
-
-    }
     //generates the password of an given length
-    private static void generate_password(){
+    protected static String generate_password(){
+        //clears the output string
+        pwOutput = "";
         //executes the choose_characters method
         set_characters();
         //loops the amount of the passwordlength
@@ -81,9 +53,7 @@ public class passwordGenerator extends layout
             pwOutput += pwGetChar[(int) (Math.random() * pwGetChar.length)];
         }
         //displays the password on the screen
-        System.out.println(pwOutput);
-
-
+        return pwOutput;
     }
     //here are the character chosen based on the users choice
     private static void set_characters(){
