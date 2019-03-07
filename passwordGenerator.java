@@ -1,10 +1,9 @@
  // ---------- imports -----------\\
-    //importing Random to choose a character
     import java.util.Random;
-    //importing scanner for user input
     import java.util.Scanner;
-    //importing Arrays for copying arrays
     import java.util.Arrays;
+    import java.awt.datatransfer.*;
+    import java.awt.Toolkit;
  // --------  end imports ---------\\
 
 
@@ -18,7 +17,6 @@ public class passwordGenerator extends javax.swing.JFrame
     private static String[]            pwNumbers        =   {"1","2","3","4","5","6","7","8","9","0"};
     private static String[]            pwSymbols        =   {"!","@","#","$","%","^","&","*","_","-","+","="};
     private static String[]            pwCharacters     =   {"~","(",")","{","}","[","]","/","\\","\"","`",",",";",":",".","<",">"," "};
-
 
     //the length of the password.
     // The user can choose the lenth
@@ -36,13 +34,14 @@ public class passwordGenerator extends javax.swing.JFrame
     protected static boolean           useCharacters    = false;
     protected static boolean           useSymbols       = false;
 
+    // variables to copy the password
+    public static StringSelection stringSelection;
+    public static Clipboard clipboard;
 
-    /* ------------------------- */
+    /* ---------End Variables------------ */
+
     public static void main(String[]args){
-        //Execute();
-        //generate_password();
     }
-
     //generates the password of an given length
     protected static String generate_password(){
         //clears the output string
@@ -129,6 +128,12 @@ public class passwordGenerator extends javax.swing.JFrame
         //returns the 'tmp' array.
         // which now constists out of two arrays
         return tmp;
+    }
+    //Copy the password
+    protected static void Copy(){
+        stringSelection = new StringSelection(pwOutput);
+        clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(stringSelection, null);
     }
 
 }

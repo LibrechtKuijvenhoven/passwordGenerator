@@ -12,6 +12,7 @@ public class layout extends passwordGenerator{
 
     // Variables declaration - do not modify
     private javax.swing.JCheckBox characters;
+    private javax.swing.JButton copy;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane password_field;
@@ -47,6 +48,7 @@ public class layout extends passwordGenerator{
         characters = new javax.swing.JCheckBox();
         symbols = new javax.swing.JCheckBox();
         length = new javax.swing.JTextField();
+        copy = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -99,6 +101,11 @@ public class layout extends passwordGenerator{
         });
 
         length.setText("6");
+        copy.setText("copy");
+        copy.setVisible(false);
+        copy.addActionListener(new java.awt.event.ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent evt){ copyActionPreformed(evt); }
+        });
         //<editor-fold desc="grouplayout">
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,45 +113,52 @@ public class layout extends passwordGenerator{
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(52, 52, 52)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jButton1)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(password_length, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(symbols)
-                                                .addComponent(length, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGroup(layout.createSequentialGroup()
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                                .addComponent(upper)
-                                                                .addComponent(lower))
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                .addComponent(numbers)
-                                                                .addComponent(characters)))))
-                                .addContainerGap(78, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(password_length, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(copy, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(length, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(lower)
+                                                        .addComponent(upper)
+                                                        .addComponent(symbols))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jButton1)
+                                                        .addComponent(numbers)
+                                                        .addComponent(characters))))
+                                .addContainerGap(54, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap()
+                                .addGap(24, 24, 24)
                                 .addComponent(password_length, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(4, 4, 4)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(copy, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane1))
+                                .addGap(21, 21, 21)
                                 .addComponent(length, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(numbers)
                                         .addComponent(lower))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(upper)
-                                        .addComponent(characters))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(symbols)
-                                .addGap(16, 16, 16)
-                                .addComponent(jButton1)
-                                .addGap(24, 24, 24))
+                                        .addComponent(characters, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(symbols))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(20, 20, 20)
+                                                .addComponent(jButton1)))
+                                .addGap(32, 32, 32))
         );// </editor-fold>
         pack();
     }// </editor-fold>
@@ -155,9 +169,11 @@ public class layout extends passwordGenerator{
         // checks if the password field is empty
         if(password_field.getText() != null && password_field.getText().equals("")) {
             display(generate_password());
+            copy.setVisible(true);
         }else {
             password_field.setText("");
             display(generate_password());
+            copy.setVisible(true);
         }
 
     }
@@ -176,8 +192,6 @@ public class layout extends passwordGenerator{
         }else{
             pw.useUpper = false;
         }
-
-
     }
 
     private void numbersActionPerformed(java.awt.event.ActionEvent evt) {
@@ -186,7 +200,6 @@ public class layout extends passwordGenerator{
         }else{
             pw.useNumbers = false;
         }
-
     }
 
     private void charactersActionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,7 +208,6 @@ public class layout extends passwordGenerator{
         }else{
             pw.useCharacters = false;
         }
-
     }
 
     private void symbolsActionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,7 +216,9 @@ public class layout extends passwordGenerator{
         }else{
             pw.useSymbols = false;
         }
-
+    }
+    private void copyActionPreformed(java.awt.event.ActionEvent evt){
+        pw.Copy();
     }
     private void display(String text){
         password_field.setText(text);
