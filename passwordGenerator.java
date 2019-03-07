@@ -1,9 +1,11 @@
-//importing Random to choose a character
-import java.util.Random;
-//importing scanner for user input
-import java.util.Scanner;
-//importing Arrays for copying arrays
-import java.util.Arrays;
+ // ---------- imports -----------\\
+    //importing Random to choose a character
+    import java.util.Random;
+    //importing scanner for user input
+    import java.util.Scanner;
+    //importing Arrays for copying arrays
+    import java.util.Arrays;
+ // --------  end imports ---------\\
 
 
 
@@ -57,6 +59,9 @@ public class passwordGenerator extends javax.swing.JFrame
     }
     //here are the character chosen based on the users choice
     private static void set_characters(){
+        //clear the array for all the characters
+        // to make sure that it generates the correct password
+        pwGetChar = new String[0];
 
         //checks if the user wants to use lowercase letters for his password
         //example:    abc

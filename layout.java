@@ -163,29 +163,48 @@ public class layout extends passwordGenerator{
     }
 
     private void lowerActionPerformed(java.awt.event.ActionEvent evt) {
-        System.out.println(evt);
-        // TODO add your handling code here:
-        pw.useLower = true;
+        if(lower.isSelected()) {
+            pw.useLower = true;
+        }else{
+            pw.useLower = false;
+        }
     }
 
     private void upperActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        pw.useUpper = true;
+        if(upper.isSelected()) {
+            pw.useUpper = true;
+        }else{
+            pw.useUpper = false;
+        }
+
+
     }
 
     private void numbersActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        pw.useNumbers = true;
+        if(numbers.isSelected()) {
+           pw.useNumbers = true;
+        }else{
+            pw.useNumbers = false;
+        }
+
     }
 
     private void charactersActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        pw.useCharacters = true;
+        if(characters.isSelected()) {
+            pw.useCharacters = true;
+        }else{
+            pw.useCharacters = false;
+        }
+
     }
 
     private void symbolsActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        pw.useSymbols = true;
+        if(symbols.isSelected()) {
+            pw.useSymbols = true;
+        }else{
+            pw.useSymbols = false;
+        }
+
     }
     private void display(String text){
         password_field.setText(text);
