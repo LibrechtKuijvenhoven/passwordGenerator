@@ -38,6 +38,9 @@ public class passwordGenerator extends javax.swing.JFrame
     public static StringSelection stringSelection;
     public static Clipboard clipboard;
 
+    public  static String               ErrorShort = "Error: password is to short";
+    public  static String               ErrorLong = "Error: password is to long";
+
     /* ---------End Variables------------ */
 
     public static void main(String[]args){
@@ -134,6 +137,16 @@ public class passwordGenerator extends javax.swing.JFrame
         stringSelection = new StringSelection(pwOutput);
         clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(stringSelection, null);
+    }
+
+    protected static String passwordCheck(){
+        if(pwLength < 6){
+            return ErrorShort;
+        }else if(pwLength > 32){
+            return ErrorLong;
+        }else{
+            return "checked";
+        }
     }
 
 }

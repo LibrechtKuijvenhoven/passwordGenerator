@@ -56,7 +56,7 @@ public class layout extends passwordGenerator{
 
         password_length.setEditable(false);
         password_length.setBackground(new java.awt.Color(240, 240, 240));
-        password_length.setText("password:");
+        password_length.setText("Output:");
 
         jButton1.setText("Generate!");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -114,23 +114,32 @@ public class layout extends passwordGenerator{
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(52, 52, 52)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(password_length, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(copy, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(length, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(lower)
-                                                        .addComponent(upper)
-                                                        .addComponent(symbols))
-                                                .addGap(18, 18, 18)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jButton1)
-                                                        .addComponent(numbers)
-                                                        .addComponent(characters))))
-                                .addContainerGap(54, Short.MAX_VALUE))
+                                                        .addComponent(password_length, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(length, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(lower)
+                                                                        .addComponent(upper)
+                                                                        .addComponent(symbols))
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                .addGap(70, 70, 70)
+                                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                        .addComponent(numbers)
+                                                                                        .addComponent(characters)))
+                                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
+                                                                                .addComponent(jButton1))))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jScrollPane1)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(copy, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGap(59, 59, 59))))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,20 +152,20 @@ public class layout extends passwordGenerator{
                                         .addComponent(jScrollPane1))
                                 .addGap(21, 21, 21)
                                 .addComponent(length, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(numbers)
-                                        .addComponent(lower))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(upper)
-                                        .addComponent(characters, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(lower)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(upper)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(symbols))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(20, 20, 20)
+                                                .addGap(11, 11, 11)
+                                                .addComponent(numbers)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(characters, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
                                                 .addComponent(jButton1)))
                                 .addGap(32, 32, 32))
         );// </editor-fold>
@@ -168,12 +177,22 @@ public class layout extends passwordGenerator{
         pw.pwLength = Integer.parseInt(length.getText());
         // checks if the password field is empty
         if(password_field.getText() != null && password_field.getText().equals("")) {
-            display(generate_password());
-            copy.setVisible(true);
+            if(pw.passwordCheck() == "checked") {
+                display(generate_password());
+                copy.setVisible(true);
+            }else {
+                copy.setVisible(false);
+                display(passwordCheck());
+            }
         }else {
-            password_field.setText("");
-            display(generate_password());
-            copy.setVisible(true);
+            if(pw.passwordCheck() == "checked") {
+                password_field.setText("");
+                display(generate_password());
+                copy.setVisible(true);
+            }else {
+                copy.setVisible(false);
+                display(passwordCheck());
+            }
         }
 
     }
