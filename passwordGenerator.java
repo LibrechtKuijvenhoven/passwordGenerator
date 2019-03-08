@@ -7,8 +7,6 @@
     import java.awt.Toolkit;
  // --------  end imports ---------\\
 
-
-
 public class passwordGenerator extends javax.swing.JFrame
 {
     /* ---- Define Varibles ---- */
@@ -43,8 +41,10 @@ public class passwordGenerator extends javax.swing.JFrame
     public static StringSelection stringSelection;
     public static Clipboard clipboard;
 
+    // error messages
     public  static String               ErrorShort = "Error: password is to short";
     public  static String               ErrorLong = "Error: password is to long";
+    public static String                ErrorLessCharacters = "Error: less charactes than that length";
 
     /* ---------End Variables------------ */
 
@@ -62,7 +62,6 @@ public class passwordGenerator extends javax.swing.JFrame
         //displays the password on the screen
         return pwOutput;
     }
-
     //generates the password of an given length
     protected static String generate_distinct_password(){
         //clears the output string
@@ -71,14 +70,12 @@ public class passwordGenerator extends javax.swing.JFrame
         for (int i=0; i<pwLength;i++){
             //adds a random string chosen from the chosen characters
             pwTmpString = pwGetChar[(int) (Math.random() * pwGetChar.length)];
-
             if (pwTmpArray.contains(pwTmpString)){
                 i--;
             }else{
                 pwTmpArray.add(pwTmpString);
             }
             pwTmpString = "";
-
         }
         for (String K: pwTmpArray) {
             pwOutput += K;
@@ -147,15 +144,12 @@ public class passwordGenerator extends javax.swing.JFrame
     }
     //Merge two characters arrays
     public static String[] merge(String[] array){
-
         //makes a temporary arra
         String[] tmp = new String[pwGetChar.length + array.length];
-
         //copy the 'pwGetChar' array the 'tmp' array
         System.arraycopy(pwGetChar, 0, tmp, 0, pwGetChar.length);
         //copy the given array the 'tmp' array
         System.arraycopy(array, 0, tmp, pwGetChar.length, array.length);
-
         //returns the 'tmp' array.
         // which now constists out of two arrays
         return tmp;
@@ -166,12 +160,14 @@ public class passwordGenerator extends javax.swing.JFrame
         clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(stringSelection, null);
     }
-
+    //check the password length
     protected static String passwordCheck(){
         if(pwLength < 6){
             return ErrorShort;
         }else if(pwLength > 32){
             return ErrorLong;
+        }else if(pwLength > 6 && pwLength < 32 && pwLength > pwGetChar.length){
+            return ErrorLessCharacters;
         }else{
             return "checked";
         }
