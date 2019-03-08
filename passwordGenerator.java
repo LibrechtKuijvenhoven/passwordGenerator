@@ -2,6 +2,7 @@
     import java.util.Random;
     import java.util.Scanner;
     import java.util.Arrays;
+    import java.util.ArrayList;
     import java.awt.datatransfer.*;
     import java.awt.Toolkit;
  // --------  end imports ---------\\
@@ -22,10 +23,14 @@ public class passwordGenerator extends javax.swing.JFrame
     // The user can choose the lenth
     public static int                  pwLength;
     //this is the string where the password that will be generated in
-    public static String               pwOutput = "";
+    public static String             pwOutput = "";
+
+    private static ArrayList<String> pwTmpArray  = new ArrayList<>();
+    private static String            pwTmpString = "";
 
     // here goes all the arrays that the users has chosen
     private static String[]            pwGetChar = {};
+
 
     // all the variables which indicates which kind of characters the user wants to use for his password
     protected static boolean           useLower         = false;
@@ -49,18 +54,41 @@ public class passwordGenerator extends javax.swing.JFrame
     protected static String generate_password(){
         //clears the output string
         pwOutput = "";
-        //executes the choose_characters method
-        set_characters();
         //loops the amount of the passwordlength
         for (int i=0; i<pwLength;i++){
             //adds a random string chosen from the chosen characters
-            pwOutput += pwGetChar[(int) (Math.random() * pwGetChar.length)];
+                pwOutput += pwGetChar[(int) (Math.random() * pwGetChar.length)];
         }
         //displays the password on the screen
         return pwOutput;
     }
+
+    //generates the password of an given length
+    protected static String generate_distinct_password(){
+        //clears the output string
+        pwOutput = "";
+        //loops the amount of the passwordlength
+        for (int i=0; i<pwLength;i++){
+            //adds a random string chosen from the chosen characters
+            pwTmpString = pwGetChar[(int) (Math.random() * pwGetChar.length)];
+
+            if (pwTmpArray.contains(pwTmpString)){
+                i--;
+            }else{
+                pwTmpArray.add(pwTmpString);
+            }
+            pwTmpString = "";
+
+        }
+        for (String K: pwTmpArray) {
+            pwOutput += K;
+        }
+        pwTmpArray.clear();
+        //displays the password on the screen
+        return (pwOutput);
+    }
     //here are the character chosen based on the users choice
-    private static void set_characters(){
+    protected static void set_characters(){
         //clear the array for all the characters
         // to make sure that it generates the correct password
         pwGetChar = new String[0];

@@ -22,6 +22,7 @@ public class layout extends passwordGenerator{
     private javax.swing.JCheckBox numbers;
     private javax.swing.JCheckBox symbols;
     private javax.swing.JCheckBox upper;
+    private javax.swing.JCheckBox duplicates;
 
     passwordGenerator pw;
     // End of variables declaration
@@ -49,6 +50,7 @@ public class layout extends passwordGenerator{
         symbols = new javax.swing.JCheckBox();
         length = new javax.swing.JTextField();
         copy = new javax.swing.JButton();
+        duplicates = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,6 +59,8 @@ public class layout extends passwordGenerator{
         password_length.setEditable(false);
         password_length.setBackground(new java.awt.Color(240, 240, 240));
         password_length.setText("Output:");
+
+        password_field.setEditable(false);
 
         jButton1.setText("Generate!");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -106,6 +110,9 @@ public class layout extends passwordGenerator{
         copy.addActionListener(new java.awt.event.ActionListener(){
             public void actionPerformed(java.awt.event.ActionEvent evt){ copyActionPreformed(evt); }
         });
+
+        duplicates.setSelected(true);
+        duplicates.setText("Duplicates");
         //<editor-fold desc="grouplayout">
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,8 +124,11 @@ public class layout extends passwordGenerator{
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addComponent(password_length, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(length, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(length, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(64, 64, 64)
+                                                                .addComponent(duplicates)))
+                                                .addContainerGap(247, Short.MAX_VALUE))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                         .addGroup(layout.createSequentialGroup()
@@ -148,20 +158,21 @@ public class layout extends passwordGenerator{
                                 .addComponent(password_length, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(copy, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                                        .addComponent(copy, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                                         .addComponent(jScrollPane1))
-                                .addGap(21, 21, 21)
-                                .addComponent(length, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(length, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(duplicates))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(lower)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(upper)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(symbols))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(11, 11, 11)
                                                 .addComponent(numbers)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(characters, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,22 +185,23 @@ public class layout extends passwordGenerator{
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
 
+        password_field.setText("");
         pw.pwLength = Integer.parseInt(length.getText());
+        pw.set_characters();
         // checks if the password field is empty
-        if(password_field.getText() != null && password_field.getText().equals("")) {
-            if(pw.passwordCheck() == "checked") {
+        if (duplicates.isSelected()) {
+            if (pw.passwordCheck() == "checked") {
                 display(generate_password());
                 copy.setVisible(true);
-            }else {
+            } else {
                 copy.setVisible(false);
                 display(passwordCheck());
             }
-        }else {
-            if(pw.passwordCheck() == "checked") {
-                password_field.setText("");
-                display(generate_password());
+        }else{
+            if (pw.passwordCheck() == "checked") {
+                display(generate_distinct_password());
                 copy.setVisible(true);
-            }else {
+            } else {
                 copy.setVisible(false);
                 display(passwordCheck());
             }
@@ -250,12 +262,13 @@ public class layout extends passwordGenerator{
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            /*for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
-            }
+            }*/
+            javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(layout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
