@@ -5,6 +5,12 @@
     import java.util.ArrayList;
     import java.awt.datatransfer.*;
     import java.awt.Toolkit;
+    import java.io.File;
+    import java.io.FileWriter;
+    import java.io.*;
+    import javax.swing.JFileChooser;
+    import java.time.LocalDateTime;
+    import java.time.format.DateTimeFormatter;
  // --------  end imports ---------\\
 
 public class passwordGenerator extends javax.swing.JFrame
@@ -21,13 +27,15 @@ public class passwordGenerator extends javax.swing.JFrame
     // The user can choose the lenth
     public static int                  pwLength;
     //this is the string where the password that will be generated in
-    public static String             pwOutput = "";
+    public static String               pwOutput = "";
 
-    private static ArrayList<String> pwTmpArray  = new ArrayList<>();
-    private static String            pwTmpString = "";
+    private static ArrayList<String>   pwTmpArray  = new ArrayList<>();
+    private static String              pwTmpString = "";
 
     // here goes all the arrays that the users has chosen
     private static String[]            pwGetChar = {};
+
+
 
 
     // all the variables which indicates which kind of characters the user wants to use for his password
@@ -38,12 +46,17 @@ public class passwordGenerator extends javax.swing.JFrame
     protected static boolean           useSymbols       = false;
 
     // variables to copy the password
-    public static StringSelection stringSelection;
-    public static Clipboard clipboard;
+    public static StringSelection      stringSelection;
+    public static Clipboard            clipboard;
+
+    public static File          file;
+    public static String               path;
+
+
 
     // error messages
-    public  static String               ErrorShort = "Error: password is to short";
-    public  static String               ErrorLong = "Error: password is to long";
+    public static String                ErrorShort = "Error: password is to short";
+    public static String                ErrorLong = "Error: password is to long";
     public static String                ErrorLessCharacters = "Error: less charactes than that length";
 
     /* ---------End Variables------------ */
@@ -161,16 +174,69 @@ public class passwordGenerator extends javax.swing.JFrame
         clipboard.setContents(stringSelection, null);
     }
     //check the password length
-    protected static String passwordCheck(){
+    protected static String passwordCheck(boolean Selected){
         if(pwLength < 6){
             return ErrorShort;
         }else if(pwLength > 32){
             return ErrorLong;
-        }else if(pwLength > 6 && pwLength < 32 && pwLength > pwGetChar.length){
+        }else if(pwLength > 6 && pwLength < 32 && pwLength > pwGetChar.length && !Selected){
             return ErrorLessCharacters;
         }else{
             return "checked";
         }
     }
 
+    protected static void Save(String password) {
+        JFileChooser jf = new JFileChooser();
+        jf.setDialogTitle("Choose save place:");
+        jf.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int returnVal = jf.showSaveDialog(null);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            path = jf.getSelectedFile().getAbsolutePath();
+            try{
+                writeInFile(password, path);
+            }catch (FileNotFoundException err){
+                System.out.println(err);
+            }catch (IOException e){
+                System.out.println(e);
+            }
+        }
+    }
+
+    private static void writeInFile (String password,String path) throws IOException {
+            file = new File(path + "\\password.txt");
+
+            if (file.exists()) {
+                file.delete();
+            }
+
+            file.createNewFile();
+
+            FileWriter writer = new FileWriter(file);
+
+            writer.write("Password \n");
+            writer.write("================================== \n");
+            writer.write(password + "\n");
+            writer.write("\n \n");
+            writer.write("Created on  \n");
+            writer.write("==================================  \n");
+            writer.write(setTime());
+
+            writer.close();
+            file.setReadOnly();
+
+    }
+
+    private static String setTime(){
+        LocalDateTime now = LocalDateTime.now();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        String formatDateTime = now.format(formatter);
+
+        return formatDateTime;
+    }
+
 }
+
+    
